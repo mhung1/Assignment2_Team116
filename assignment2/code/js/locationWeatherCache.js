@@ -54,13 +54,20 @@ function LocationWeatherCache()
     //
     this.addLocation = function(latitude, longitude, nickname)
     {
+        // create an object
+        
         var newLocation = {
-            latitube: latitude,
+            latitude: latitude,
             longitude: longitude,
-            nickname: nickname
-        }
+            nickname: nickname,
+            forecasts:
+        };
+        
+        // store it in the array
         
         locations.push(newLocation);
+            
+        return locations.length - 1; // the index of the new added location should be the last item in the array
     }
 
     // Removes the saved location at the given index.
@@ -75,7 +82,12 @@ function LocationWeatherCache()
     // are active web service requests and so doesn't need to be saved.
     //
     this.toJSON = function() {
+        // trasfer the private variables into an object
+        var locationWeatherCachePDO = {
+            locations: locations
+        };
         
+        return locationWeatherCachePDO;
     };
 
     // Given a public-data-only version of the class (such as from
@@ -83,6 +95,7 @@ function LocationWeatherCache()
     // instance to match that version.
     //
     this.initialiseFromPDO = function(locationWeatherCachePDO) {
+        locations = locationWeatherCachePDO.locations;            
     };
 
     // Request weather for the location at the given index for the
@@ -116,6 +129,15 @@ function LocationWeatherCache()
     //
     function indexForLocation(latitude, longitude)
     {
+        for(var i = 0; i < locations.length; i++)
+        {
+            if (latitude === locations[i].latitude && longitude === locations[i].longitude)
+            {
+                return i; // return the index of matched location
+            }
+            
+            return -1; // does not match any location
+        }
     }
 }
 
@@ -123,11 +145,23 @@ function LocationWeatherCache()
 //
 function loadLocations()
 {
+    var locationWeatherCacheJSON = localStorage.getItem(APP_PREFIX);
+    if (locationWeatherCacheJSON)
+    {
+        var locationWeatherCachePDO = JSON.parse(locationWeatherCacheJSON);
+        var locationWeatherCache = new LocationWeatherCache();
+        locationWeatherCache.initialiseFromPDO(locationWeatherCachePDO);
+    }
+    else
+    {
+        console.log("Error: local storage item not found.")
+    }
 }
 
 // Save the singleton locationWeatherCache to Local Storage.
 //
 function saveLocations()
 {
+    localStorage.setItem(APP_PREFIX, JSON.stringify(LocationWeatherCache));
 }
 
