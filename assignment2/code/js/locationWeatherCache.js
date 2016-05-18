@@ -45,6 +45,10 @@ function LocationWeatherCache()
     // Indexes begin at zero.
     //
     this.locationAtIndex = function(index) {
+        if(index > locations.length)
+        {
+            console.log("Error: location at index " + index + " does not exist.")
+        }
         return locations[index];
     };
 
@@ -54,19 +58,14 @@ function LocationWeatherCache()
     //
     this.addLocation = function(latitude, longitude, nickname)
     {
-        // create an object
-        
         var newLocation = {
             latitude: latitude,
             longitude: longitude,
             nickname: nickname,
-            forecasts:
+            forecasts: {}
         };
         
-        // store it in the array
-        
-        locations.push(newLocation);
-            
+        locations.push(newLocation);         
         return locations.length - 1; // the index of the new added location should be the last item in the array
     }
 
@@ -74,7 +73,7 @@ function LocationWeatherCache()
     // 
     this.removeLocationAtIndex = function(index)
     {
-        location.splice[index, 1];
+        locations.splice(index, 1);
     }
 
     // This method is used by JSON.stringify() to serialise this class.
@@ -83,6 +82,7 @@ function LocationWeatherCache()
     //
     this.toJSON = function() {
         // trasfer the private variables into an object
+        
         var locationWeatherCachePDO = {
             locations: locations
         };
@@ -109,6 +109,20 @@ function LocationWeatherCache()
     // weather object for that location.
     // 
     this.getWeatherAtIndexForDate = function(index, date, callback) {
+        var key = locations[index].latitude + "," + locations[index].longitude + "," + date;
+        
+        if(locations[index].forecasts.hasOwnProperty(key))
+        {
+            callback(index, locations[index].forecasts[key]);
+        }
+        else
+        {   // API call is needed
+            
+            callbacks = callback; // temporary save the callback function for later use
+            var script = document.createElement('script');
+            script.src = "https://api.forecast.io/forecast/545d94fc22b966c9fe0d025fab265e6c/" + key + "?exclude=currently,minutely,hourly&units=ca&callback=this.weatherResponse";
+            document.body.appendChild(script);
+        }
     };
     
     // This is a callback function passed to forecast.io API calls.
@@ -118,6 +132,24 @@ function LocationWeatherCache()
     // weather request.
     //
     this.weatherResponse = function(response) {
+        
+        var index = indexForLocation(response.latitude,response.longitude);
+        var date = new Date();
+        date.setTime(1000 * response.daily.data[0].time);
+        var key = response.latitude + "," + response.longitude + "," + date.forecastDateString();
+        
+        var weather = {
+            summary: response.daily.data[0].summary,
+            temperatureMin: response.daily.data[0].temperatureMin,
+            temperatureMax: response.daily.data[0].temperatureMax,
+            humidity: response.daily.data[0].humidity,
+            windSpeed: response.daily.data[0].windSpeed
+        }
+        
+        locations[index].forecasts[key] = weather;
+        
+        callbacks(index, weather); // call the saved callback function
+
     };
 
     // Private methods:
@@ -135,9 +167,9 @@ function LocationWeatherCache()
             {
                 return i; // return the index of matched location
             }
-            
-            return -1; // does not match any location
         }
+        
+        return -1; // does not match any location
     }
 }
 
@@ -145,11 +177,11 @@ function LocationWeatherCache()
 //
 function loadLocations()
 {
-    var locationWeatherCacheJSON = localStorage.getItem(APP_PREFIX);
+    var locationWeatherCacheJSON = localStorage.getItem(APP_PREFIX + "-cache");
     if (locationWeatherCacheJSON)
     {
         var locationWeatherCachePDO = JSON.parse(locationWeatherCacheJSON);
-        var locationWeatherCache = new LocationWeatherCache();
+        locationWeatherCache = new LocationWeatherCache();
         locationWeatherCache.initialiseFromPDO(locationWeatherCachePDO);
     }
     else
@@ -162,6 +194,6 @@ function loadLocations()
 //
 function saveLocations()
 {
-    localStorage.setItem(APP_PREFIX, JSON.stringify(LocationWeatherCache));
+    localStorage.setItem(APP_PREFIX + "-cache", JSON.stringify(locationWeatherCache));
 }
 
