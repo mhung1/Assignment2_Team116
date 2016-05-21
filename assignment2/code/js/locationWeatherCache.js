@@ -187,6 +187,9 @@ function loadLocations()
     else
     {
         console.log("Error: local storage item not found.")
+        
+        // create an empty cache
+        locationWeatherCache = new LocationWeatherCache();
     }
 }
 
