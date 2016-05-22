@@ -24,7 +24,7 @@
             };
             var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
             }
-     google.maps.event.addDomListener(window, 'load', initialize);
+            google.maps.event.addDomListener(window, 'load', initialize);
 </script>
     </head>
     
@@ -50,9 +50,9 @@
                       <font size="4">Nickname:</font>
                       <input type="text" style="font-size:18pt;height:25px;width:200px;">
                       <br> <br/>
-                  <button type="button">SEARCH</button> 
+                  <button id="searchButton"type="button"onclick="buttonclick()">SEARCH</button> 
                   <br> <br/>
-                <button type="button">ADD LOCATION</button>
+                <button id="addLocation"type="button"onclick="addLocation()">ADD LOCATION</button>
                       <div id="googleMap" style="width:500px;height:380px;"></div>
                   </form>
 
