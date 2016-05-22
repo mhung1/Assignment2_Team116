@@ -148,7 +148,8 @@ function LocationWeatherCache()
             temperatureMin: response.daily.data[0].temperatureMin,
             temperatureMax: response.daily.data[0].temperatureMax,
             humidity: humidity.toFixed(1),
-            windSpeed: response.daily.data[0].windSpeed
+            windSpeed: response.daily.data[0].windSpeed,
+            icon: response.daily.data[0].icon
         }
         
         locations[index].forecasts[key] = weather;
