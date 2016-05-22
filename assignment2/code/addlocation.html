@@ -13,6 +13,19 @@
         <link rel="shortcut icon" sizes="196x196" href="images/icon.png" />
         <link rel="apple-touch-icon-precomposed" href="images/icon.png" />
         <script src="http://maps.googleapis.com/maps/api/js"></script>
+        <script>
+        function initialize() 
+            {
+             var mapProp = 
+            {
+            center:new google.maps.LatLng(-37.908042,145.1325757),
+            zoom:15,
+            mapTypeId:google.maps.MapTypeId.ROADMAP
+            };
+            var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+            }
+     google.maps.event.addDomListener(window, 'load', initialize);
+</script>
     </head>
     
     <body>
@@ -36,6 +49,11 @@
                       <br/>
                       <font size="4">Nickname:</font>
                       <input type="text" style="font-size:18pt;height:25px;width:200px;">
+                      <br> <br/>
+                  <button type="button">SEARCH</button> 
+                  <br> <br/>
+                <button type="button">ADD LOCATION</button>
+                      <div id="googleMap" style="width:500px;height:380px;"></div>
                   </form>
 
               </div>
