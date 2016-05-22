@@ -140,7 +140,7 @@ function LocationWeatherCache()
         var date = new Date(1000 * response.daily.data[0].time).forecastDateString();
         var key = response.latitude + "," + response.longitude + "," + date;
         
-        // convert it in terms of %
+        // convert humidity into %
         var humidity = 100 * response.daily.data[0].humidity;
         
         var weather = {

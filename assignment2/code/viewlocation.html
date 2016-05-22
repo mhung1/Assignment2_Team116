@@ -14,11 +14,11 @@
         <link rel="apple-touch-icon-precomposed" href="images/icon.png" />
         <style>
             #map {
-                width: 350px;
-                height: 400px;
+                width: 300px;
+                height: 300px;
             }
             input[type=range] {
-                width: 350px;
+                width: 300px;
             }
         </style>
     </head>
@@ -40,7 +40,7 @@
               <div class="mdl-cell">
                 <!--   Main page content here:   -->  
                 <div id="map"></div><br/>
-                <input type="range" min="0" max="30" value="30" oninput="sliderCallback(this.value)">
+                <input id="slider" type="range" min="0" max="30" value="30" oninput="sliderCallback(this.value)">
                 <h3><label id="date">YYYY-MM-DD</label></h3>
                 <label id="weather">Loading weather...</label><br/><br/>
                 <button id="removeButton" >REMOVE THIS LOCATION</button>
