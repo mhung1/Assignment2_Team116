@@ -12,20 +12,7 @@
         <meta name="mobile-web-app-capable" content="yes" />
         <link rel="shortcut icon" sizes="196x196" href="images/icon.png" />
         <link rel="apple-touch-icon-precomposed" href="images/icon.png" />
-        <script src="http://maps.googleapis.com/maps/api/js"></script>
-        <script>
-        function initialize() 
-            {
-             var mapProp = 
-            {
-            center:new google.maps.LatLng(-37.908042,145.1325757),
-            zoom:15,
-            mapTypeId:google.maps.MapTypeId.ROADMAP
-            };
-            var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-            }
-            google.maps.event.addDomListener(window, 'load', initialize);
-</script>
+        
     </head>
     
     <body>
@@ -44,15 +31,15 @@
                 <!--   Main page content here:   -->
                   <form>
                       <font size="4">Location:</font>
-                      <input type="text" style="font-size:18pt;height:25px;width:200px;"/>
+                      <input type="text" id="locationInput" style="font-size:18pt;height:25px;width:200px;"/>
                       <br/>
                       <br/>
                       <font size="4">Nickname:</font>
-                      <input type="text" style="font-size:18pt;height:25px;width:200px;">
+                      <input type="text" id="nicknameInput" style="font-size:18pt;height:25px;width:200px;">
                       <br> <br/>
-                  <button id="searchButton"type="button"onclick="buttonclick()">SEARCH</button> 
+                  <button id="searchButton" type="button" onclick="search()">SEARCH</button> 
                   <br> <br/>
-                <button id="addLocation"type="button"onclick="addLocation()">ADD LOCATION</button>
+                <button id="addlocationButton" type="button" onclick="addLocation()">ADD LOCATION</button>
                       <div id="googleMap" style="width:500px;height:380px;"></div>
                   </form>
 
@@ -64,5 +51,6 @@
         <!--   JavaScript files:   -->
         <script src="js/locationWeatherCache.js"></script>
         <script src="js/addlocationPage.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlmgZ1Nj0KIWIRSEKsQVHFFwAW78hy1G4&callback=initialize"></script>
     </body>
 </html>
