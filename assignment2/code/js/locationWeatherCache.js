@@ -112,7 +112,7 @@ function LocationWeatherCache()
     // weather object for that location.
     // 
     this.getWeatherAtIndexForDate = function(index, date, callback) {
-        var key = locations[index].latitude + "," + locations[index].longitude + "," + date;
+        var key = locations[index].latitude + "," + locations[index].longitude + "," + date.forecastDateString();
         
         if(locations[index].forecasts.hasOwnProperty(key))
         {

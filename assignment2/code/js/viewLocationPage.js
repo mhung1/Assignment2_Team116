@@ -34,12 +34,12 @@ var weatherCallback = function (index, weather)
 function sliderCallback (value)
 {
     weatherRef.innerHTML = "Loading weather...";
-    var date = new Date();
-    var msecSince1970 = date.getTime();
+    var currentDate = new Date();
+    var msecSince1970 = currentDate.getTime();
     msecSince1970 -= (30 - value) * MSEC_PER_DAY;
-    date.setTime(msecSince1970);
-    dateRef.innerHTML = date.simpleDateString();
-    locationWeatherCache.getWeatherAtIndexForDate(locationIndex,date.forecastDateString(),weatherCallback);
+    currentDate.setTime(msecSince1970);
+    dateRef.innerHTML = currentDate.simpleDateString();
+    locationWeatherCache.getWeatherAtIndexForDate(locationIndex, currentDate, weatherCallback);
 }
 
 // Remove button onClick event
@@ -59,17 +59,17 @@ document.getElementById("headerBarTitle").textContent =
 locationWeatherCache.locationAtIndex(locationIndex).nickname;
 var today = new Date();
 dateRef.innerHTML = today.simpleDateString();
-locationWeatherCache.getWeatherAtIndexForDate(locationIndex,today.forecastDateString(),weatherCallback);
+locationWeatherCache.getWeatherAtIndexForDate(locationIndex, today, weatherCallback);
 
 // Show the map:
 
 var map;
-var latitude = Number(locationWeatherCache.locationAtIndex(locationIndex).latitude);
-var longitude = Number(locationWeatherCache.locationAtIndex(locationIndex).longitude);
+var mapLatitude = Number(locationWeatherCache.locationAtIndex(locationIndex).latitude);
+var mapLongitude = Number(locationWeatherCache.locationAtIndex(locationIndex).longitude);
 
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
-    center: {lat: latitude, lng: longitude},
+    center: {lat: mapLatitude, lng: mapLongitude},
     zoom: 9
     });
 }

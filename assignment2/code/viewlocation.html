@@ -40,8 +40,8 @@
               <div class="mdl-cell">
                 <!--   Main page content here:   -->  
                 <div id="map"></div><br/>
-                <input type="range" min="0" max="30" value = "30" oninput="sliderCallback(this.value)">
-                <h3><label id = "date">2016</label></h3>
+                <input type="range" min="0" max="30" value="30" oninput="sliderCallback(this.value)">
+                <h3><label id="date">YYYY-MM-DD</label></h3>
                 <label id="weather">Loading weather...</label><br/><br/>
                 <button id="removeButton" >REMOVE THIS LOCATION</button>
               </div>
@@ -51,8 +51,9 @@
 
         <!--   JavaScript files:   -->
         <script src="js/locationWeatherCache.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlmgZ1Nj0KIWIRSEKsQVHFFwAW78hy1G4&callback=initMap"
-    async defer></script>
+        
         <script src="js/viewLocationPage.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlmgZ1Nj0KIWIRSEKsQVHFFwAW78hy1G4&callback=initMap"></script>
+
     </body>
 </html>
