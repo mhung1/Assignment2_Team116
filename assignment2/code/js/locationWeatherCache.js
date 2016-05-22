@@ -48,6 +48,7 @@ function LocationWeatherCache()
         if(index > locations.length)
         {
             console.log("Error: location at index " + index + " does not exist.")
+            return undefined;
         }
         return locations[index];
     };
@@ -65,7 +66,8 @@ function LocationWeatherCache()
             forecasts: {}
         };
         
-        locations.push(newLocation);         
+        locations.push(newLocation);
+        saveLocations();
         return locations.length - 1; // the index of the new added location should be the last item in the array
     }
 
@@ -74,6 +76,7 @@ function LocationWeatherCache()
     this.removeLocationAtIndex = function(index)
     {
         locations.splice(index, 1);
+        saveLocations();
     }
 
     // This method is used by JSON.stringify() to serialise this class.
@@ -118,9 +121,9 @@ function LocationWeatherCache()
         else
         {   // API call is needed
             
-            callbacks = callback; // temporary save the callback function for later use
+            callbacks[key] = callback; // temporary save the callback function for later use
             var script = document.createElement('script');
-            script.src = "https://api.forecast.io/forecast/545d94fc22b966c9fe0d025fab265e6c/" + key + "?exclude=currently,minutely,hourly&units=ca&callback=this.weatherResponse";
+            script.src = "https://api.forecast.io/forecast/545d94fc22b966c9fe0d025fab265e6c/" + key + "?exclude=currently,minutely,hourly&units=ca&callback=this.locationWeatherCache.weatherResponse";
             document.body.appendChild(script);
         }
     };
@@ -134,21 +137,24 @@ function LocationWeatherCache()
     this.weatherResponse = function(response) {
         
         var index = indexForLocation(response.latitude,response.longitude);
-        var date = new Date();
-        date.setTime(1000 * response.daily.data[0].time);
-        var key = response.latitude + "," + response.longitude + "," + date.forecastDateString();
+        var date = new Date(1000 * response.daily.data[0].time).forecastDateString();
+        var key = response.latitude + "," + response.longitude + "," + date;
+        
+        // convert it in terms of %
+        var humidity = 100 * response.daily.data[0].humidity;
         
         var weather = {
             summary: response.daily.data[0].summary,
             temperatureMin: response.daily.data[0].temperatureMin,
             temperatureMax: response.daily.data[0].temperatureMax,
-            humidity: response.daily.data[0].humidity,
+            humidity: humidity.toFixed(1),
             windSpeed: response.daily.data[0].windSpeed
         }
         
         locations[index].forecasts[key] = weather;
+        saveLocations();
         
-        callbacks(index, weather); // call the saved callback function
+        callbacks[key](index, weather); // call the saved callback function
 
     };
 
@@ -163,7 +169,7 @@ function LocationWeatherCache()
     {
         for(var i = 0; i < locations.length; i++)
         {
-            if (latitude === locations[i].latitude && longitude === locations[i].longitude)
+            if (latitude == locations[i].latitude && longitude == locations[i].longitude)
             {
                 return i; // return the index of matched location
             }
