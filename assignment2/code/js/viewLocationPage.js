@@ -1,6 +1,6 @@
 // Code for the View Location page.
 
-// Restore values from Local Storage
+// Restore the cache and selected location index from Local Storage
 //
 var locationIndex = localStorage.getItem(APP_PREFIX + "-selectedLocation"); 
 loadLocations();
@@ -37,9 +37,9 @@ var weatherCallback = function (index, weather)
     weatherRef.innerHTML = weather;
 }
 
-// callback function that shows today's weather at current location
+// Callback function that shows today's weather at current location
 //
-function response (response)
+function currentLocationResponse (response)
 {
     // convert humidity into %
     var humidity = 100 * response.daily.data[0].humidity;
@@ -91,11 +91,11 @@ function showCurrentLocation(position)
     // request weather at current location
     var key = mapLatitude + "," + mapLongitude + "," + today.forecastDateString();
     var script = document.createElement('script');
-    script.src = "https://api.forecast.io/forecast/545d94fc22b966c9fe0d025fab265e6c/" + key + "?exclude=currently,minutely,hourly&units=ca&callback=this.response";
+    script.src = "https://api.forecast.io/forecast/545d94fc22b966c9fe0d025fab265e6c/" + key + "?exclude=currently,minutely,hourly&units=ca&callback=this.currentLocationResponse";
     document.body.appendChild(script);
 }
 
-// map initialisation:
+// map initialization:
 //
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
