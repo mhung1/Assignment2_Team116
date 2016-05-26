@@ -12,7 +12,12 @@
         <meta name="mobile-web-app-capable" content="yes" />
         <link rel="shortcut icon" sizes="196x196" href="images/icon.png" />
         <link rel="apple-touch-icon-precomposed" href="images/icon.png" />
-        
+        <style>
+            #map {
+                width: 300px;
+                height: 300px;
+            }
+        </style>
     </head>
     
     <body>
@@ -30,17 +35,20 @@
               <div class="mdl-cell">
                 <!--   Main page content here:   -->
                   <form>
-                      <font size="4">Location:</font>
-                      <input type="text" id="locationInput" style="font-size:18pt;height:25px;width:200px;"/>
+                      <font>Location:</font>
+                      <input type="text" id="address" >
                       <br/>
                       <br/>
-                      <font size="4">Nickname:</font>
-                      <input type="text" id="nicknameInput" style="font-size:18pt;height:25px;width:200px;">
-                      <br> <br/>
-                  <button id="searchButton" type="button" onclick="search()">SEARCH</button> 
-                  <br> <br/>
-                <button id="addlocationButton" type="button" onclick="addLocation()">ADD LOCATION</button>
-                      <div id="googleMap" style="width:500px;height:380px;"></div>
+                      <font>Nickname:</font>
+                      <input type="text" id="nickname" >
+                      <br/>
+                      <br/>
+                      <button id="searchButton" type="button" onclick="search()">SEARCH</button> 
+                      <br/>
+                      <br/>
+                      <div id="map"></div>
+                      <br/>
+                      <button id="addButton" type="button" onclick="addLocation()">ADD LOCATION</button>
                   </form>
 
               </div>
@@ -51,6 +59,6 @@
         <!--   JavaScript files:   -->
         <script src="js/locationWeatherCache.js"></script>
         <script src="js/addlocationPage.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlmgZ1Nj0KIWIRSEKsQVHFFwAW78hy1G4&callback=initialize"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3&callback=initMap" async defer></script>
     </body>
 </html>
