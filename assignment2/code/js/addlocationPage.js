@@ -75,14 +75,13 @@ function addLocation ()
     // hints: nicknameRef = ""
     //        latitude and longitude is undefined or not
     
-    // if ([something])
-    // {
+    if (lat>-80 && lat<80, lng>-180 && lng<180, nicknameRef != "" )
+    {
             locationWeatherCache.addLocation(lat, lng, nickNameInputRef.value);
             location.href = 'index.html'; // go back to main page
-    // }
-    // else
-    // {
-    //    something goes wrong, alert the user to search location or type in Nickname
-    //    hints: use alert([message you want to display])
-    // }
+    }
+    else
+    {
+       alert"Please enter a valid location and/or nickname to continue")
+    }
 }
