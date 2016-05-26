@@ -9,28 +9,31 @@ function viewLocation(locationIndex) {
     // And load the view location page.
     location.href = 'viewlocation.html';
 }
+
+//loads locations stored in locationWeatherCache
 loadLocations();
 var today = new Date()
 var outputAreaRef = document.getElementById("locationsListRef")
 
+//Display locations list
 for (var index = 0; index <= LocationWeatherCache.length; index++) {
 
-    locationWeatherCache.getWeatherAtIndexForDate(index, today, [callback]);
-
+    locationWeatherCache.getWeatherAtIndexForDate(index, today, showWeather);
 
 };
 
+//HTML formatting of weather information for locations
 function showWeather(index, weather) {
     var output = "";
     tempMin = weather.temperatureMax
     tempMax = weather.temperatureMax
 
-    output = '<li class=\"mdl-list__item mdl-list__item--two-line" onclick="viewLocation(' + index + ');"><span class="mdl-list__item-primary-content"><img class="mdl-list__item-icon" id="'
-    weather.icon '" src="images/loading.png" class="list-avatar" /><span>'
-    locationWeatherCache.locationAtIndex(index).nickname(index)
-    '</span><span id="weather'
-    index '" class="mdl-list__item-sub-title">' + tempMin + ", " + tempMax
-    '</span></span></li>'
+    output = "<li class=\"mdl-list__item mdl-list__item--two-line\" onclick=\"viewLocation(" + index + ");\">"
+    output += "<span class=\"mdl-list__item-primary-content\">"
+    output += "<img class=\"mdl-list__item-icon\" id=\" weather.icon \" src=\"images/loading.png\" class=\"list-avatar\" />"
+    output += "<span>" + locationWeatherCache.locationAtIndex(index).nickname(index) + "</span>"
+    output += "<span id=\"weather" + index + "class=\"mdl-list__item-sub-title\">"
+    output += "Low: " + tempMin + ", " + "High: " + tempMax + "</span></span></li>"
 
-    outputAreaRef.innerHTML += output    
+    outputAreaRef.innerHTML += output
 }
