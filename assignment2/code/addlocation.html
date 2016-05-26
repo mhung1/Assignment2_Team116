@@ -31,16 +31,16 @@
                 <!--   Main page content here:   -->
                   <form>
                       <font size="4">Location:</font>
-                      <input type="text" id="address" style="font-size:18pt;height:25px;width:200px;"/>
+                      <input type="text" id="locationInput" style="font-size:18pt;height:25px;width:200px;"/>
                       <br/>
                       <br/>
                       <font size="4">Nickname:</font>
-                      <input type="text" id="nickname" style="font-size:18pt;height:25px;width:200px;">
+                      <input type="text" id="nicknameInput" style="font-size:18pt;height:25px;width:200px;">
                       <br> <br/>
                   <button id="searchButton" type="button" onclick="search()">SEARCH</button> 
                   <br> <br/>
-                <button id="addButton" type="button" onclick="addLocation()">ADD LOCATION</button>
-                      <div id="map" style="width:300px;height:300px;"></div>
+                <button id="addlocationButton" type="button" onclick="addLocation()">ADD LOCATION</button>
+                      <div id="googleMap" style="width:500px;height:380px;"></div>
                   </form>
 
               </div>
@@ -51,6 +51,6 @@
         <!--   JavaScript files:   -->
         <script src="js/locationWeatherCache.js"></script>
         <script src="js/addlocationPage.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlmgZ1Nj0KIWIRSEKsQVHFFwAW78hy1G4&callback=initMap"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlmgZ1Nj0KIWIRSEKsQVHFFwAW78hy1G4&callback=initialize"></script>
     </body>
 </html>
