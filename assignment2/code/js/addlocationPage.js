@@ -71,17 +71,17 @@ function geocodeAddress(geocoder, resultsMap) {
 // execute when addlocation button is clicked
 function addLocation ()
 {
-    // using if statement to check: 1. nickname, 2. location
-    // hints: nicknameRef = ""
-    //        latitude and longitude is undefined or not
-    
-    if (lat>-80 && lat<80, lng>-180 && lng<180, nicknameRef != "" )
+    // check whether a valid location and/or a nickname exist or not
+    if (typeof latitude == 'number' && typeof longitude == 'number' && nicknameRef.value != "" )
     {
-            locationWeatherCache.addLocation(lat, lng, nickNameInputRef.value);
-            location.href = 'index.html'; // go back to main page
+        // add the location with a nickname properly into the cache
+        locationWeatherCache.addLocation(latitude, longitude, nicknameRef.value);
+
+        // go back to main page
+        location.href = 'index.html';
     }
     else
     {
-       alert"Please enter a valid location and/or nickname to continue")
+       alert("Please enter a valid location and/or nickname to continue");
     }
 }
