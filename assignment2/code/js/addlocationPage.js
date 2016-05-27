@@ -1,5 +1,4 @@
 // Code for the Add Location page.
-loadLocations();
 
 // DOM References:
 var addressRef = document.getElementById("address");

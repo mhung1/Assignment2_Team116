@@ -1,9 +1,8 @@
 // Code for the View Location page.
 
-// Restore the cache and selected location index from Local Storage
+// Restore the selected location index from Local Storage
 //
 var locationIndex = localStorage.getItem(APP_PREFIX + "-selectedLocation"); 
-loadLocations();
 
 // DOM References:
 

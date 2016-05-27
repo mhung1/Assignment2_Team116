@@ -207,3 +207,5 @@ function saveLocations()
     localStorage.setItem(APP_PREFIX + "-cache", JSON.stringify(locationWeatherCache));
 }
 
+// load the locations once when a page is loaded.
+loadLocations();
