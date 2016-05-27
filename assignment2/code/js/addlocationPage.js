@@ -9,7 +9,8 @@ var addButtonRef = document.getElementById("addButton");
 // Attributes:
 var latitude;
 var longitude;
-
+var map;
+var formattedAddress;
 
 // search button onclick function that geocode the address
 //
@@ -23,7 +24,6 @@ function search()
 //
 function initMap() 
 {
-    // Create a map
     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 12,
     });
@@ -36,7 +36,8 @@ function initMap()
 // maps/documentation/javascript/examples/geocoding-simple
 // since Google's geocoding API doesn't support JSONP
 //
-function geocodeAddress(geocoder, resultsMap) {
+function geocodeAddress(geocoder, resultsMap)
+{
     var addressObj = {
         'address': addressRef.value
     };
@@ -56,7 +57,8 @@ function geocodeAddress(geocoder, resultsMap) {
             });
             
             // show the formatted address
-            infowindow.setContent(results[0].formatted_address);
+            formattedAddress = results[0].formatted_address
+            infowindow.setContent(formattedAddress);
             infowindow.open(map, marker);
         }
         else
@@ -66,21 +68,30 @@ function geocodeAddress(geocoder, resultsMap) {
     });
 }
 
-
-// execute when addlocation button is clicked
-function addLocation ()
+// onClick function of addlocation button
+//
+function addLocation()
 {
-    // check whether a valid location and/or a nickname exist or not
-    if (typeof latitude == 'number' && typeof longitude == 'number' && nicknameRef.value != "" )
+    // check whether a valid location exist or not
+    if (typeof latitude == 'number' && typeof longitude == 'number')
     {
-        // add the location with a nickname properly into the cache
-        locationWeatherCache.addLocation(latitude, longitude, nicknameRef.value);
+        if (nicknameRef.value == "")
+        {
+            // no nickname so add the location with the formatted address
+            locationWeatherCache.addLocation(latitude, longitude, formattedAddress);
+        }
+        else
+        {
+            // add the location with a nickname properly into the cache
+            locationWeatherCache.addLocation(latitude, longitude, nicknameRef.value);
+        }
+        
 
-        // go back to main page
+        // return to the main page
         location.href = 'index.html';
     }
     else
     {
-       alert("Please enter a valid location and/or nickname to continue");
+       alert("Please enter a valid location to continue");
     }
 }

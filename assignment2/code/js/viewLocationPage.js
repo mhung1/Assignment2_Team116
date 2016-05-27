@@ -15,14 +15,29 @@ var titleRef = document.getElementById("headerBarTitle");
 // Attributes:
 
 var today = new Date();
-dateRef.innerHTML = today.simpleDateString();
 var mapLatitude;
 var mapLongitude;
 var map;
 
+// map initialization:
+//
+function initMap() {
+    // geolocation need plenty of time to get the current location,
+    // an error will occur if this initMap function is called before
+    // receiving a valid location. Therefore, we will initialize the
+    // map appropriately after a short period of time
+	setTimeout(function(){
+		map = new google.maps.Map(document.getElementById("map"), {
+    		center: {lat: mapLatitude, lng: mapLongitude},
+    		zoom: 12
+    	});
+	},250);
+    
+}
+
 // Callback function that displays weather information on the screen
 //
-var weatherCallback = function (index, weather)
+function weatherCallback(index, weather)
 {
     var weather = 
         "Summary: " + weather.summary + "<br/>" +
@@ -35,7 +50,7 @@ var weatherCallback = function (index, weather)
 
 // Callback function that shows today's weather at current location
 //
-function currentLocationResponse (response)
+function currentLocationResponse(response)
 {
     // convert humidity into %
     var humidity = 100 * response.daily.data[0].humidity;
@@ -49,20 +64,25 @@ function currentLocationResponse (response)
             icon: response.daily.data[0].icon
     }
     
+    // display the weather
     weatherCallback(-1, weather);
 }
 
 // Change the date when the user drags the slider
 //
-function sliderCallback (value)
+function sliderCallback(value)
 {
+    // shows loading while the information might not be there
     weatherRef.innerHTML = "Loading weather...";
-    var currentDate = new Date();
-    var msecSince1970 = currentDate.getTime();
-    msecSince1970 -= (30 - value) * MSEC_PER_DAY;
-    currentDate.setTime(msecSince1970);
-    dateRef.innerHTML = currentDate.simpleDateString();
-    locationWeatherCache.getWeatherAtIndexForDate(locationIndex, currentDate, weatherCallback);
+    
+    // display the date where the slider is dragged to
+    var msecSince1970 = today.getTime();
+    msecSince1970 -= (30 - value) * MSEC_PER_DAY; // minus the number of days dragged behind
+    
+    // create a date object where the slider is
+    var sliderDate = new Date(msecSince1970);
+    dateRef.innerHTML = sliderDate.simpleDateString(); // shows YYYY-MM-DD format
+    locationWeatherCache.getWeatherAtIndexForDate(locationIndex, sliderDate, weatherCallback); 
 }
 
 // Remove button onClick event
@@ -73,8 +93,6 @@ function removeThisLocation()
     location.href = 'index.html';
 }
 
-removeButtonRef.addEventListener("click", removeThisLocation);
-
 // show the position and weather information at current location
 //
 function showCurrentLocation(position)
@@ -82,7 +100,6 @@ function showCurrentLocation(position)
     // map initialise
     mapLatitude = position.coords.latitude;
     mapLongitude = position.coords.longitude;
-    initMap();
     
     // request weather at current location
     var key = mapLatitude + "," + mapLongitude + "," + today.forecastDateString();
@@ -91,20 +108,15 @@ function showCurrentLocation(position)
     document.body.appendChild(script);
 }
 
-// map initialization:
-//
-function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-    center: {lat: mapLatitude, lng: mapLongitude},
-    zoom: 12
-    });
-}
+// display today's date.
+
+dateRef.innerHTML = today.simpleDateString();
 
 // Show information of selected location:
 
 if (locationIndex == -1)
 {
-    // current location
+    // current location case
     removeButtonRef.style.visibility = "hidden"; // hide the button
     sliderRef.style.visibility = "hidden"; // hide the slider
     titleRef.textContent = "Current location";

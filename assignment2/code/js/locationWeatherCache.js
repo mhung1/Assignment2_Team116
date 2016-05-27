@@ -1,4 +1,3 @@
-
 // Returns a date in the format "YYYY-MM-DD".
 Date.prototype.simpleDateString = function() {
     function pad(value)
@@ -213,5 +212,5 @@ function saveLocations()
     localStorage.setItem(APP_PREFIX + "-cache", JSON.stringify(locationWeatherCache));
 }
 
-// load the locations once when a page is loaded.
+// load the locations once whenever a page is loaded.
 loadLocations();
