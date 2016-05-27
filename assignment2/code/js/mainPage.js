@@ -41,7 +41,7 @@ outputAreaRef.innerHTML = "<li class=\"mdl-list__item mdl-list__item--two-line\"
 
 //Display locations list:
 
-for (var index = 0; index <= LocationWeatherCache.length; index++)
+for (var index = 0; index < locationWeatherCache.length(); index++)
 {
     locationWeatherCache.getWeatherAtIndexForDate(index, today, showWeather);
 };
