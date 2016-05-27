@@ -20,6 +20,9 @@ Date.prototype.forecastDateString = function() {
     return this.simpleDateString() + "T12:00:00";
 }
 
+// CONSTANT:
+
+var MSEC_PER_DAY = 86400000;
 
 // Code for LocationWeatherCache class and other shared code.
 
@@ -135,9 +138,12 @@ function LocationWeatherCache()
     // weather request.
     //
     this.weatherResponse = function(response) {
-        
+        // get the index of selected location
         var index = indexForLocation(response.latitude,response.longitude);
-        var date = new Date(1000 * response.daily.data[0].time).forecastDateString();
+        
+        // create the date, since the time of the result data is at mid night of that day.
+        // to prevent any time zone errors, we should use the mid-day time so we add msec of a half day
+        var date = new Date(1000 * response.daily.data[0].time + 0.5 * MSEC_PER_DAY).forecastDateString();
         var key = response.latitude + "," + response.longitude + "," + date;
         
         // convert humidity into %

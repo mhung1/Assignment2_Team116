@@ -12,10 +12,6 @@ var removeButtonRef = document.getElementById("removeButton");
 var sliderRef = document.getElementById("slider");
 var titleRef = document.getElementById("headerBarTitle");
 
-// CONSTANT:
-
-var MSEC_PER_DAY = 86400000;
-
 // Attributes:
 
 var today = new Date();
