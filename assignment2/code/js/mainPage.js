@@ -31,9 +31,9 @@ function showWeather(index, weather) {
     output = "<li class=\"mdl-list__item mdl-list__item--two-line\" onclick=\"viewLocation(" + index + ");\">"
     output += "<span class=\"mdl-list__item-primary-content\">"
     output += "<img class=\"mdl-list__item-icon\" id=\" weather.icon \" src=\"images/loading.png\" class=\"list-avatar\" />"
-    output += "<span>" + locationWeatherCache.locationAtIndex(index).nickname(index) + "</span>"
+    output += "<span>" + locationWeatherCache.locationAtIndex(index).nickname + "</span>"
     output += "<span id=\"weather" + index + "class=\"mdl-list__item-sub-title\">"
     output += "Low: " + tempMin + ", " + "High: " + tempMax + "</span></span></li>"
 
     outputAreaRef.innerHTML += output
-}
+};
