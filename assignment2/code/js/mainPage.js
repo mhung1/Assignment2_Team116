@@ -5,7 +5,7 @@
 
 function viewLocation(locationIndex) {
     // Save the desired location to local storage
-    localStorage.setItem(APP_PREFIX + "-selectedLocation", locationName);
+    localStorage.setItem(APP_PREFIX + "-selectedLocation", locationIndex);
     // And load the view location page.
     location.href = 'viewlocation.html';
 }
