@@ -10,6 +10,7 @@ var dateRef = document.getElementById("date");
 var weatherRef = document.getElementById("weather");
 var removeButtonRef = document.getElementById("removeButton");
 var sliderRef = document.getElementById("slider");
+var titleRef = document.getElementById("headerBarTitle");
 
 // CONSTANT:
 
@@ -110,14 +111,14 @@ if (locationIndex == -1)
     // current location
     removeButtonRef.style.visibility = "hidden"; // hide the button
     sliderRef.style.visibility = "hidden"; // hide the slider
-    document.getElementById("headerBarTitle").textContent = "Current location";
+    titleRef.textContent = "Current location";
     navigator.geolocation.getCurrentPosition(showCurrentLocation); 
 }
 else
 {
     // location at given index
     locationWeatherCache.getWeatherAtIndexForDate(locationIndex, today, weatherCallback);
-    document.getElementById("headerBarTitle").textContent = locationWeatherCache.locationAtIndex(locationIndex).nickname;
+    titleRef.textContent = locationWeatherCache.locationAtIndex(locationIndex).nickname;
     mapLatitude = Number(locationWeatherCache.locationAtIndex(locationIndex).latitude);
     mapLongitude = Number(locationWeatherCache.locationAtIndex(locationIndex).longitude);
 }

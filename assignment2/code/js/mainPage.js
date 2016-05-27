@@ -22,7 +22,7 @@ for (var index = 0; index <= LocationWeatherCache.length; index++) {
 
 //HTML formatting of weather information for locations
 function showWeather(index, weather) {
-    var output = "";
+    var output = "<li class=\"mdl-list__item mdl-list__item--two-line\" onclick=\"viewLocation(-1);\"> <span class=\"mdl-list__item-primary-content\"> <img class=\"mdl-list__item-icon\" id=\"icon\" src=\"images/loading.png\" class=\"list-avatar\" /> <span>Current Location</span> </span> </li>";
     tempMin = weather.temperatureMax
     tempMax = weather.temperatureMax
 
